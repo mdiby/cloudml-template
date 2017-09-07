@@ -5,6 +5,15 @@ from tensorflow.python.feature_column import feature_column
 
 
 def create_feature_columns():
+    """Creates tensorflow feature_column definitions based on the metadata of the features.
+
+    the tensorflow feature_column objects are created based on the data types of the features
+    defined in the metadata.py module. Extended featured (if any) are created, based on the base features,
+    as the preprocess.extend_feature_columns method is called.
+
+    Returns:
+      A list of tf.feature_column objects.
+    """
 
     numeric_columns = list(
         map(lambda feature_name: tf.feature_column.numeric_column(feature_name),
@@ -23,11 +32,31 @@ def create_feature_columns():
 
     feature_columns = numeric_columns + categorical_column_with_vocabulary + categorical_column_with_hash_bucket
 
+    # add extended feature definitions before returning the feature_columns list
     return preprocess.extend_feature_columns(feature_columns)
 
 
 def get_deep_and_wide_columns(feature_columns, embedding_size=0, use_indicators=True):
+    """Creates deep and wide feature column lists.
 
+    given a list of feature_column, each feature_column is categorised as either:
+    1) dense, if the column is tf.feature_column._NumericColumn,
+    2) categorical, if the column is tf.feature_column._VocabularyListCategoricalColumn or tf.feature_column._BucketizedColumn, or
+    3) sparse, if the column is tf.feature_column._HashedCategoricalColumn or tf.feature_column._CrossedColumn.
+
+    if use_indicators=True, then  categorical_columns are converted into indicator_column.
+    if embedding_size > 0, then sparse_columns are converted to tf.feature_column.embedding_column (using the embedding_size).
+
+    deep_columns = dense_columns + indicator_columns + embedding_columns
+    wide_columns = categorical_columns + sparse_columns
+
+    Args:
+        feature_columns: [tf.feature_column] - A list of tf.feature_column objects.
+        embedding_size: int - if greater than 0, then sparse_columns are converted to tf.feature_column.embedding_column.
+        use_indicators: bool - if True, then categorical_columns are converted into tf.feature_column.indicator_column.
+    Returns:
+        [tf.feature_column],[tf.feature_column]: deep and wide feature_column lists.
+    """
     dense_columns = list(
         filter(lambda column: isinstance(column, feature_column._NumericColumn),
                feature_columns

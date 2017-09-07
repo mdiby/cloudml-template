@@ -5,6 +5,13 @@ import serving
 
 
 def create_classifier(config):
+    """ Create a DNNLinearCombinedClassifier based on the HYPER_PARAMS in the parameters module
+
+    Args:
+        config - used for model directory
+    Returns:
+        DNNLinearCombinedClassifier
+    """
 
     feature_columns = featurizer.create_feature_columns()
 
@@ -36,6 +43,13 @@ def create_classifier(config):
 
 
 def create_regressor(config):
+    """ Create a DNNLinearCombinedRegressor based on the HYPER_PARAMS in the parameters module
+
+    Args:
+        config - used for model directory
+    Returns:
+        DNNLinearCombinedRegressor
+    """
 
     feature_columns = featurizer.create_feature_columns()
 

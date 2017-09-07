@@ -13,6 +13,7 @@ import experiment
 import serving
 
 
+# entry point
 def main():
 
     args_parser = argparse.ArgumentParser()

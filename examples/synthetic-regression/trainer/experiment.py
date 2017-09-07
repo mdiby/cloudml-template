@@ -16,13 +16,30 @@ def get_eval_metrics():
     else:
 
         metrics = {
-            'auc': tf.contrib.learn.MetricSpec(metric_fn=tf.contrib.metrics.streaming_auc)
+            'auc': tf.contrib.learn.MetricSpec(metric_fn=tf.contrib.metrics.streaming_auc,
+                                               prediction_key="classes",
+                                               label_key=None
+                                               )
         }
 
     return metrics
 
 
 def generate_experiment_fn(**experiment_args):
+    """Create an experiment function.
+
+     See command line help text for description of args.
+     Args:
+       experiment_args: keyword arguments to be passed through to experiment
+         See `tf.contrib.learn.Experiment` for full args.
+     Returns:
+       A function:
+         (tf.contrib.learn.RunConfig, tf.contrib.training.HParams) -> Experiment
+
+       This function is used by learn_runner to create an Experiment which
+       executes model code provided in the form of an Estimator and
+       input functions.
+     """
 
     def _experiment_fn(run_config, hparams):
 

@@ -13,11 +13,11 @@ def compute_rmse(estimates, actual):
     rmse = math.sqrt(((pd.Series(estimates) - actual) ** 2).sum() / len(actual))
     return rmse
 
-
 test_data = pd.read_csv("data/test-data.csv", header=None, names="key,x,y,alpha,beta,target".split(','))
 
-test_instances = list(test_data.apply(lambda row: {'x': row['x'], 'y': row['y'], 'alpha': row['alpha'], 'beta': row['beta']}
-                                 , axis=1))
+test_instances = list(test_data.apply(
+    lambda row: {'x': row['x'], 'y': row['y'], 'alpha': row['alpha'], 'beta': row['beta']}
+    , axis=1))
 
 
 estimates = inference.estimate(instances=test_instances

@@ -1,5 +1,3 @@
-from tensorflow.contrib.training.python.training import hparam
-
 HYPER_PARAMS = None
 
 def initialise_arguments(args_parser):

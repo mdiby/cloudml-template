@@ -10,6 +10,7 @@ def json_serving_input_fn():
     feature_columns = featurizer.create_feature_columns()
 
     inputs = {}
+
     for feat in feature_columns:
         inputs[feat.name] = tf.placeholder(shape=[None], dtype=feat.dtype)
 

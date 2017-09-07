@@ -23,23 +23,23 @@ def estimate(project, model_name, version, instances):
 
     return estimates
 
-#
-# instances = [
-#     {
-#         'x': 1.3,
-#         'y': -0.5,
-#         'alpha': 'ax01',
-#         'beta': 'bx02'
-#     },
-#
-#     {
-#         'x': -0.7,
-#         'y': -0.5,
-#         'alpha': 'ax02',
-#         'beta': 'bx02'
-#     }
-# ]
-#
+
+instances = [
+    {
+        'x': 1.3,
+        'y': -0.5,
+        'alpha': 'ax01',
+        'beta': 'bx02'
+    },
+
+    {
+        'x': -0.7,
+        'y': -0.5,
+        'alpha': 'ax02',
+        'beta': 'bx02'
+    }
+]
+
 # estimates = estimate(instances=instances
 #                      ,project=PROJECT
 #                      ,model_name=MODEL_NAME

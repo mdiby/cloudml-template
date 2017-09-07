@@ -1,9 +1,17 @@
 import tensorflow as tf
 import featurizer
 import parameters
+import serving
 
 
 def create_classifier(config):
+    """ Create a DNNLinearCombinedClassifier based on the HYPER_PARAMS in the parameters module
+
+    Args:
+        config - used for model directory
+    Returns:
+        DNNLinearCombinedClassifier
+    """
 
     feature_columns = featurizer.create_feature_columns()
 
@@ -28,13 +36,20 @@ def create_classifier(config):
         dnn_dropout=parameters.HYPER_PARAMS.dropout_prob,
         fix_global_step_increment_bug=True,
 
-        config=config
+        config=config,
     )
 
     return classifier
 
 
 def create_regressor(config):
+    """ Create a DNNLinearCombinedRegressor based on the HYPER_PARAMS in the parameters module
+
+    Args:
+        config - used for model directory
+    Returns:
+        DNNLinearCombinedRegressor
+    """
 
     feature_columns = featurizer.create_feature_columns()
 
@@ -59,7 +74,7 @@ def create_regressor(config):
         dnn_dropout=parameters.HYPER_PARAMS.dropout_prob,
         fix_global_step_increment_bug=True,
 
-        config=config
+        config=config,
     )
 
     return regressor

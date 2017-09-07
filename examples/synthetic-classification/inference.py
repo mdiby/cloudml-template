@@ -49,7 +49,6 @@ instances = [
     }
 ]
 
-
 # predictions = predict(project=PROJECT,
 #                       model_name=MODEL_NAME,
 #                       version=VERSION,
