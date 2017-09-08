@@ -6,7 +6,7 @@ BUCKET=ksalama-gcs-cloudml
 MODEL_NAME="synth_regressor"
 MODEL_VERSION="v1"
 
-MODEL_BINARIES=$(gsutil ls gs://${BUCKET}/cloudml-template/examples/synthetic-regression/trained_models/${MODEL_NAME}/export/Servo | tail -1)
+MODEL_BINARIES=$(gsutil ls gs://${BUCKET}/trained-models/${MODEL_NAME}/export/Servo | tail -1)
 
 gsutil ls ${MODEL_BINARIES}
 

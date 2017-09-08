@@ -13,15 +13,15 @@ def create_classifier(config):
         DNNLinearCombinedClassifier
     """
 
-    feature_columns = featurizer.create_feature_columns()
+    feature_columns = list(featurizer.create_feature_columns().values())
 
     deep_columns, wide_columns = featurizer.get_deep_and_wide_columns(
         feature_columns,
         embedding_size=parameters.HYPER_PARAMS.embedding_size
     )
 
-    linear_optimizer=tf.train.FtrlOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
-    dnn_optimizer=tf.train.AdagradOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
+    linear_optimizer = tf.train.FtrlOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
+    dnn_optimizer = tf.train.AdagradOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
 
     classifier = tf.contrib.learn.DNNLinearCombinedClassifier(
 
@@ -51,15 +51,15 @@ def create_regressor(config):
         DNNLinearCombinedRegressor
     """
 
-    feature_columns = featurizer.create_feature_columns()
+    feature_columns = list(featurizer.create_feature_columns().values())
 
     deep_columns, wide_columns = featurizer.get_deep_and_wide_columns(
         feature_columns,
         embedding_size=parameters.HYPER_PARAMS.embedding_size
     )
 
-    linear_optimizer=tf.train.FtrlOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
-    dnn_optimizer=tf.train.AdagradOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
+    linear_optimizer = tf.train.FtrlOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
+    dnn_optimizer = tf.train.AdagradOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
 
     regressor = tf.contrib.learn.DNNLinearCombinedRegressor(
 

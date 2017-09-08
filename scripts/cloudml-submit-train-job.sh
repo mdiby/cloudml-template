@@ -6,15 +6,18 @@ REGION=europe-west1
 TIER=BASIC # BASIC | BASIC_GPU | STANDARD_1 | PREMIUM_1
 BUCKET=ksalama-gcs-cloudml
 
-MODEL_NAME=synth_regressor
+MODEL_NAME="synth_regressor"
 
 PACKAGE_PATH=trainer
-TRAIN_FILES=gs://${BUCKET}/cloudml-template/examples/synthetic-regression/data/train-data.csv
-VALID_FILES=gs://${BUCKET}/cloudml-template/examples/synthetic-regression/data/valid-data.csv
-MODEL_DIR=gs://${BUCKET}/cloudml-template/examples/synthetic-regression/trained_models/${MODEL_NAME}
+TRAIN_FILES=gs://${BUCKET}/data/synthetic-regression/train-data.csv
+VALID_FILES=gs://${BUCKET}/data/synthetic-regression/valid-data.csv
+MODEL_DIR=gs://${BUCKET}/trained-models/${MODEL_NAME}
+
+#remove model directory, if you don't want to resume training, or if you have changed the model structure
+gsutil -m rm -r ${MODEL_DIR}
 
 CURRENT_DATE=`date +%Y%m%d_%H%M%S`
-JOB_NAME=train_${MODEL_NAME}_${CURRENT_DATE}
+JOB_NAME=train_${MODEL_NAME}_${CURRENT_DATE}]
 #JOB_NAME=tune_${MODEL_NAME}_${CURRENT_DATE}
 
 gcloud ml-engine jobs submit training ${JOB_NAME} \

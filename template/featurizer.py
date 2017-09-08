@@ -12,25 +12,28 @@ def create_feature_columns():
     as the preprocess.extend_feature_columns method is called.
 
     Returns:
-      A list of tf.feature_column objects.
+      {string: tf.feature_column}: dictionary of name:feature_column .
     """
 
-    numeric_columns = list(
-        map(lambda feature_name: tf.feature_column.numeric_column(feature_name),
-            metadata.NUMERIC_FEATURE_NAMES)
-    )
+    numeric_columns = {feature_name: tf.feature_column.numeric_column(feature_name)
+                       for feature_name in metadata.NUMERIC_FEATURE_NAMES}
 
-    categorical_column_with_vocabulary = list(
-        map(lambda item: tf.feature_column.categorical_column_with_vocabulary_list(item[0], item[1]),
-            metadata.CATEGORICAL_FEATURE_NAMES_WITH_VOCABULARY.items())
-    )
+    categorical_column_with_vocabulary = {item[0]: tf.feature_column.categorical_column_with_vocabulary_list(item[0], item[1])
+                                          for item in metadata.CATEGORICAL_FEATURE_NAMES_WITH_VOCABULARY.items()}
 
-    categorical_column_with_hash_bucket = list(
-        map(lambda item: tf.feature_column.categorical_column_with_hash_bucket(item[0], item[1]),
-            metadata.CATEGORICAL_FEATURE_NAMES_WITH_HASH_BUCKET.items())
-    )
+    categorical_column_with_hash_bucket = {item[0]:tf.feature_column.categorical_column_with_hash_bucket(item[0], item[1])
+                                           for item in metadata.CATEGORICAL_FEATURE_NAMES_WITH_HASH_BUCKET.items()}
 
-    feature_columns = numeric_columns + categorical_column_with_vocabulary + categorical_column_with_hash_bucket
+    feature_columns = {}
+
+    if numeric_columns is not None:
+        feature_columns.update(numeric_columns)
+
+    if categorical_column_with_vocabulary is not None:
+        feature_columns.update(categorical_column_with_vocabulary)
+
+    if categorical_column_with_hash_bucket is not None:
+        feature_columns.update(categorical_column_with_hash_bucket)
 
     # add extended feature definitions before returning the feature_columns list
     return preprocess.extend_feature_columns(feature_columns)

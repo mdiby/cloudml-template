@@ -9,21 +9,25 @@ TRAIN_FILES=data/train-data.csv
 VALID_FILES=data/valid-data.csv
 MODEL_DIR=trained_models/${MODEL_NAME}
 
+#remove model directory, if you don't want to resume training, or if you have changed the model structure
+rm -r ${MODEL_DIR}
+
+
 gcloud ml-engine local train \
-    --module-name=trainer.task \
-    --package-path=${PACKAGE_PATH} \
-    -- \
-    --train-files=${TRAIN_FILES} \
-    --num-epochs=10 \
-    --train-batch-size=500 \
-    --eval-files=${VALID_FILES} \
-    --eval-batch-size=500 \
-    --learning-rate=0.001 \
-    --hidden-units="128,40,40" \
-    --layer-sizes-scale-factor=0.5 \
-    --num-layers=3 \
-    --job-dir=${MODEL_DIR} \
-    --remove-model-dir=True
+        --module-name=trainer.task \
+        --package-path=${PACKAGE_PATH} \
+        -- \
+        --train-files=${TRAIN_FILES} \
+        --num-epochs=10 \
+        --train-batch-size=500 \
+        --eval-files=${VALID_FILES} \
+        --eval-batch-size=500 \
+        --learning-rate=0.001 \
+        --hidden-units="128,40,40" \
+        --layer-sizes-scale-factor=0.5 \
+        --num-layers=3 \
+        --job-dir=${MODEL_DIR} \
+        --remove-model-dir=True
 
 
 ls ${MODEL_DIR}/export/Servo

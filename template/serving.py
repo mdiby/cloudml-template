@@ -8,11 +8,12 @@ import preprocess
 def json_serving_input_fn():
 
     feature_columns = featurizer.create_feature_columns()
+    input_feature_columns = [feature_columns[feature_name] for feature_name in metadata.FEATURE_NAMES]
 
     inputs = {}
 
-    for feat in feature_columns:
-        inputs[feat.name] = tf.placeholder(shape=[None], dtype=feat.dtype)
+    for column in input_feature_columns:
+        inputs[column.name] = tf.placeholder(shape=[None], dtype=column.dtype)
 
     features = {
         key: tf.expand_dims(tensor, -1)
@@ -45,6 +46,7 @@ def csv_serving_input_fn():
 def example_serving_input_fn():
 
     feature_columns = featurizer.create_feature_columns()
+    input_feature_columns = [feature_columns[feature_name] for feature_name in metadata.FEATURE_NAMES]
 
     example_bytestring = tf.placeholder(
         shape=[None],
@@ -52,7 +54,7 @@ def example_serving_input_fn():
     )
     feature_scalars = tf.parse_example(
         example_bytestring,
-        tf.feature_column.make_parse_example_spec(feature_columns)
+        tf.feature_column.make_parse_example_spec(input_feature_columns)
     )
     features = {
         key: tf.expand_dims(tensor, -1)
@@ -63,6 +65,7 @@ def example_serving_input_fn():
         None,  # labels
         {'example_proto': example_bytestring}
     )
+
 
 SERVING_FUNCTIONS = {
     'JSON': json_serving_input_fn,
