@@ -119,7 +119,7 @@ def initialise_arguments(args_parser):
     )
     args_parser.add_argument(
         '--eval-steps',
-        help='Number of steps to run evalution for at each checkpoint',
+        help='Number of steps to run evaluation for at each checkpoint',
         default=100,
         type=int
     )
@@ -128,12 +128,6 @@ def initialise_arguments(args_parser):
         help='The input format of the exported SavedModel binary',
         choices=['JSON', 'CSV', 'EXAMPLE'],
         default='JSON'
-    )
-    args_parser.add_argument(
-        '--remove-model-dir',
-        help='Whether to remove model-dir if exists or resume training',
-        choices=['True', 'False'],
-        default='False'
     )
 
     # Argument to turn on all logging

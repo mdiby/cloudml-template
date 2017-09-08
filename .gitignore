@@ -1,2 +1,4 @@
 cloudml-env
 template_test
+examples/synthetic-classification/trained_models
+examples/synthetic-regression/trained_models

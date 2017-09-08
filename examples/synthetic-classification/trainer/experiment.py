@@ -3,28 +3,31 @@ import metadata
 import model
 import input
 
+
 def get_eval_metrics():
 
     if metadata.TASK_TYPE == "regression":
 
         metrics = {
-            'rmse': tf.contrib.learn.MetricSpec(metric_fn=tf.contrib.metrics.streaming_root_mean_squared_error)
+            'rmse':
+                tf.contrib.learn.MetricSpec(metric_fn=tf.contrib.metrics.streaming_root_mean_squared_error),
+
+            'training/hptuning/metric':
+                tf.contrib.learn.MetricSpec(metric_fn=tf.contrib.metrics.streaming_root_mean_squared_error)
         }
 
     else:
 
-        # metrics = {
-        #     'auc': tf.contrib.learn.MetricSpec(metric_fn=tf.contrib.metrics.streaming_auc,
-        #                                        prediction_key="classes",
-        #                                        label_key=None
-        #                                        )
-        # }
-
         metrics = {
-            'accuracy': tf.contrib.learn.MetricSpec(metric_fn=tf.contrib.metrics.streaming_accuracy,
-                                               prediction_key="classes", # probabilities | classes | logit
-                                               label_key=None
-                                               )
+            'auc':
+                tf.contrib.learn.MetricSpec(metric_fn=tf.contrib.metrics.streaming_auc,
+                                               prediction_key="classes",
+                                               label_key=None),
+
+            'training/hptuning/metric':
+                tf.contrib.learn.MetricSpec(metric_fn=tf.contrib.metrics.streaming_auc,
+                                            prediction_key="classes",
+                                            label_key=None),
         }
 
     return metrics

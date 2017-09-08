@@ -1,6 +1,6 @@
 import argparse
 import os
-import shutil
+import json
 
 import tensorflow as tf
 from tensorflow.contrib.learn.python.learn import learn_runner
@@ -22,21 +22,14 @@ def main():
 
     # Set python level verbosity
     tf.logging.set_verbosity(args.verbosity)
+
     # Set C++ Graph Execution level verbosity
-    os.environ['TF_CPP_MIN_LOG_LEVEL'] = str(
-        tf.logging.__dict__[args.verbosity] / 10)
+    os.environ['TF_CPP_MIN_LOG_LEVEL'] = str(tf.logging.__dict__[args.verbosity] / 10)
 
-    # Run the training job
-    # learn_runner pulls configuration information from environment
-    # variables using tf.learn.RunConfig and uses this configuration
-    # to conditionally execute Experiment, or param server code
+    # Directory to store output model and checkpoints
+    output_dir = args.job_dir
 
-    if args.remove_model_dir == 'True':
-        print("Removing model {}".format(args.job_dir))
-        shutil.rmtree(args.job_dir, ignore_errors=True)
-    else:
-        print("Resume training model {}".format(args.job_dir))
-
+    # Run the training experiment
     learn_runner.run(
         experiment.generate_experiment_fn(
             min_eval_frequency=args.min_eval_frequency,
@@ -49,9 +42,10 @@ def main():
                 default_output_alternative_key=None,
             )]
         ),
-        run_config=run_config.RunConfig(model_dir=args.job_dir),
+        run_config=run_config.RunConfig(model_dir=output_dir),
         hparams=parameters.HYPER_PARAMS
     )
+
 
 if __name__ == '__main__':
     main()

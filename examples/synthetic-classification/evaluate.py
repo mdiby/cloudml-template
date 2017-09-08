@@ -5,8 +5,8 @@ import inference
 
 
 PROJECT='ksalama-gcp-playground'
-MODEL_NAME='synth_classifier'
-VERSION='v1'
+MODEL_NAME="synth_classifier"
+MODEL_VERSION="v1"
 
 
 def compute_accuracy(predicted, actual):
@@ -23,7 +23,7 @@ test_instances = list(test_data.apply(
 predictions = inference.predict(instances=test_instances
                      ,project=PROJECT
                      ,model_name=MODEL_NAME
-                     ,version=VERSION)
+                     ,version=MODEL_VERSION)
 
 accuracy = compute_accuracy(predictions,test_data.target)
 

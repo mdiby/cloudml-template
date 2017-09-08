@@ -6,7 +6,7 @@ import inference
 
 PROJECT='ksalama-gcp-playground'
 MODEL_NAME='synth_regressor'
-VERSION='v1'
+MODEL_VERSION='v1'
 
 
 def compute_rmse(estimates, actual):
@@ -23,7 +23,7 @@ test_instances = list(test_data.apply(
 estimates = inference.estimate(instances=test_instances
                      ,project=PROJECT
                      ,model_name=MODEL_NAME
-                     ,version=VERSION)
+                     ,version=MODEL_VERSION)
 
 
 rmse = compute_rmse(estimates,test_data.target)

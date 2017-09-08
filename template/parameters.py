@@ -40,7 +40,6 @@ def initialise_arguments(args_parser):
         default=40
     )
 
-
     # Preprocessing arguments
     args_parser.add_argument(
         '--num-buckets',
@@ -54,7 +53,6 @@ def initialise_arguments(args_parser):
         default=0,
         type=int
     )
-
 
     # Estimator arguments
     args_parser.add_argument(
@@ -120,7 +118,7 @@ def initialise_arguments(args_parser):
     )
     args_parser.add_argument(
         '--eval-steps',
-        help='Number of steps to run evalution for at each checkpoint',
+        help='Number of steps to run evaluation for at each checkpoint',
         default=100,
         type=int
     )
@@ -129,12 +127,6 @@ def initialise_arguments(args_parser):
         help='The input format of the exported SavedModel binary',
         choices=['JSON', 'CSV', 'EXAMPLE'],
         default='JSON'
-    )
-    args_parser.add_argument(
-        '--remove-model-dir',
-        help='Whether to remove model-dir if exists or resume training',
-        choices=['True', 'False'],
-        default='False'
     )
 
     # Argument to turn on all logging
@@ -149,6 +141,7 @@ def initialise_arguments(args_parser):
         ],
         default='INFO',
     )
+
 
     args = args_parser.parse_args()
 

@@ -15,26 +15,27 @@ MODEL_DIR=gs://${BUCKET}/cloudml-template/examples/synthetic-regression/trained_
 
 CURRENT_DATE=`date +%Y%m%d_%H%M%S`
 JOB_NAME=train_${MODEL_NAME}_${CURRENT_DATE}
+#JOB_NAME=tune_${MODEL_NAME}_${CURRENT_DATE}
 
 gcloud ml-engine jobs submit training ${JOB_NAME} \
-    --job-dir=$MODEL_DIR \
-    --runtime-version=1.2 \
-    --region=${REGION} \
-	--scale-tier=${TIER} \
-    --module-name=trainer.task \
-    --package-path=${PACKAGE_PATH} \
-    -- \
-    --train-files=${TRAIN_FILES} \
-    --num-epochs=10 \
-    --train-batch-size 500 \
-    --eval-files=${VALID_FILES} \
-    --eval-batch-size 500 \
-    --learning-rate=0.001 \
-    --hidden-units="128,40,40" \
-    --layer-sizes-scale-factor=0.5 \
-    --num-layers=3 \
-    --job-dir=${MODEL_DIR} \
-    --remove-model-dir=True
+        --job-dir=${MODEL_DIR} \
+        --runtime-version=1.2 \
+        --region=${REGION} \
+        --scale-tier=${TIER} \
+        --module-name=trainer.task \
+        --package-path=${PACKAGE_PATH} \
+        #--config=hyperparams.yaml \
+        -- \
+        --train-files=${TRAIN_FILES} \
+        --num-epochs=10 \
+        --train-batch-size=500 \
+        --eval-files=${VALID_FILES} \
+        --eval-batch-size=500 \
+        --learning-rate=0.001 \
+        --hidden-units="128,40,10" \
+        --layer-sizes-scale-factor=0.5 \
+        --num-layers=3 \
+        --job-dir=${MODEL_DIR}
 
 
 
